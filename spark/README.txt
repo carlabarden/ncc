@@ -1,5 +1,4 @@
 # para gerar imagem
-
 docker build -f spark.df -t spark --force-rm .
 
 # para ativar o cluster
