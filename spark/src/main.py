@@ -1,6 +1,6 @@
 from pyspark import SparkContext, SparkConf
 
-conf = SparkConf().setAppName("cw.py").setMaster("spark://spark-master:7077")
+conf = SparkConf().setAppName("wordcount").setMaster("spark://spark-master:7077")
 sc = SparkContext(conf = conf)
 
 text_file = sc.textFile("/data/in/arq.txt")
