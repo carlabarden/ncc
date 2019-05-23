@@ -1,0 +1,20 @@
+version: '3'
+
+networks:
+    spark_default:
+        external: true
+
+services:
+    submit:
+        image: spark
+        command: /spark/bin/spark-submit --class my.main.Application --master spark://spark-master:7077 /app/main.py
+        hostname: driver
+        environment:
+          SPARK_MASTER: spark://spark-master:7077
+        external_links:
+          - spark-master:spark-master
+        networks:
+          - spark_default
+        volumes:
+          - ./data:/data/
+          - ./src:/app/
