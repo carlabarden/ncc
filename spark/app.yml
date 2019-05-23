@@ -7,14 +7,25 @@ networks:
 services:
     submit:
         image: spark
-        command: /spark/bin/spark-submit --class my.main.Application --master spark://spark-master:7077 /app/main.py
+        command: [sh, -c, "rm -rf /data/out && \
+              /spark/bin/spark-submit --class my.main.Application --master spark://spark-master:7077 /src/main.py"]
         hostname: driver
         environment:
           SPARK_MASTER: spark://spark-master:7077
+          SPARK_PUBLIC_DNS: 127.0.0.1
+        expose:
+          - 4040
+          - 8088
+          - 8042
+        ports:
+          - 4040:4040
+          - 8088:8088
+          - 8042:8042
         external_links:
           - spark-master:spark-master
         networks:
           - spark_default
         volumes:
           - ./data:/data/
-          - ./src:/app/
+          - ./src:/src/
+
